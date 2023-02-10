@@ -1,7 +1,8 @@
 {
     "sketch": "p0/p0.ino",
-    "configuration": "PSRAM=enabled,PartitionScheme=default,CPUFreq=240,UploadSpeed=921600,DebugLevel=none,EraseFlash=none",
+    "configuration": "PSRAM=enabled,PartitionScheme=default,CPUFreq=240,UploadSpeed=115200,DebugLevel=none,EraseFlash=none",
     "board": "esp32:esp32:m5stack-core2",
     "port": "/dev/tty.usbserial-028C2812",
-    "programmer": "esptool"
+    "programmer": "esptool",
+    "output": "output"
 }
