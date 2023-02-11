@@ -1,5 +1,5 @@
 {
-    "sketch": "p0/p0.ino",
+    "sketch": "p1/p1.ino",
     "configuration": "PSRAM=enabled,PartitionScheme=default,CPUFreq=240,UploadSpeed=115200,DebugLevel=none,EraseFlash=none",
     "board": "esp32:esp32:m5stack-core2",
     "port": "/dev/tty.usbserial-028C2812",

@@ -224,8 +224,8 @@
                 "/Volumes/Terabyte/kristofer/Library/Arduino15/packages/esp32/hardware/esp32/2.0.6/libraries/FS/src",
                 "/Volumes/Terabyte/kristofer/Library/Arduino15/packages/esp32/hardware/esp32/2.0.6/libraries/SD/src",
                 "/Volumes/Terabyte/kristofer/Library/Arduino15/packages/esp32/hardware/esp32/2.0.6/libraries/SPIFFS/src",
-                "/Volumes/Terabyte/kristofer/Library/Arduino15/packages/esp32/hardware/esp32/2.0.6/libraries/HTTPClient/src",
                 "/Volumes/Terabyte/kristofer/Library/Arduino15/packages/esp32/hardware/esp32/2.0.6/libraries/WiFi/src",
+                "/Volumes/Terabyte/kristofer/Library/Arduino15/packages/esp32/hardware/esp32/2.0.6/libraries/HTTPClient/src",
                 "/Volumes/Terabyte/kristofer/Library/Arduino15/packages/esp32/hardware/esp32/2.0.6/libraries/WiFiClientSecure/src",
                 "/Volumes/Terabyte/kristofer/Library/Arduino15/packages/esp32/tools/xtensa-esp32-elf-gcc/gcc8_4_0-esp-2021r2-patch5/xtensa-esp32-elf/include/c++/8.4.0",
                 "/Volumes/Terabyte/kristofer/Library/Arduino15/packages/esp32/tools/xtensa-esp32-elf-gcc/gcc8_4_0-esp-2021r2-patch5/xtensa-esp32-elf/include/c++/8.4.0/xtensa-esp32-elf",
@@ -584,8 +584,7 @@
                 "__ATOMIC_ACQ_REL=4",
                 "__ATOMIC_RELEASE=3",
                 "USBCON"
-            ],
-            "compileCommands": "${workspaceFolder}/output/compile_commands.json"
+            ]
         }
     ]
 }
