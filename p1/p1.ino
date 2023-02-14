@@ -17,11 +17,13 @@
 // Set the name and password of the wifi to be connected.  配置所连接wifi的名称和密码
 const char* ssid = "Rectory";
 const char* password = "peacebewithyou";
+#define EST -18000
 
 const char* ntpServer =
     "time.apple.com";  //Set the connect NTP server.  设置连接的NTP服务器
-const long gmtOffset_sec = 0;
+const long gmtOffset_sec = EST;
 const int daylightOffset_sec = 3600;
+
 
 void printLocalTime() {  //Output current time.  输出当前时间
   struct tm timeinfo;
@@ -30,14 +32,15 @@ void printLocalTime() {  //Output current time.  输出当前时间
     M5.Lcd.println("Failed to obtain time");
     return;
   }
+  M5.Lcd.fillRect(0, 50, 320, 69, BLACK);
   M5.Lcd.setCursor(0, 50);  //Set the cursor at (0,0).  设置光标位于(0,0)处
   M5.Lcd.println(
       &timeinfo,
-      "%A, %B %d %Y");
+      "%A\n%B %d %Y");
   M5.Lcd.setCursor(0, 120);  //Set the cursor at (0,0). 
   M5.Lcd.fillRect(0, 120, 320, 120, BLACK);
   M5.Lcd.drawRect(0, 120, 320, 120, BLUE);
-  M5.Lcd.setCursor(10, 130);  //Set the cursor at (0,0).
+  M5.Lcd.setCursor(80, 130);  //Set the cursor at (0,0).
   M5.Lcd.println(
       &timeinfo,
       "%H:%M:%S");
@@ -56,11 +59,12 @@ void setup() {
     M5.Lcd.print(".");
   }
   M5.Lcd.println("\nCONNECTED!");
+
   configTime(gmtOffset_sec, daylightOffset_sec,
              ntpServer);  //init and get the time.  初始化并设置NTP
 
   M5.Lcd.setTextColor(YELLOW);
-  M5.Lcd.setTextSize(2);
+  M5.Lcd.setTextSize(3);
   
   printLocalTime();
   
