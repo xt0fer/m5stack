@@ -1,8 +1,8 @@
 {
-    "sketch": "p1/p1.ino",
-    "configuration": "PSRAM=enabled,PartitionScheme=default,CPUFreq=240,UploadSpeed=115200,DebugLevel=none,EraseFlash=none",
-    "board": "esp32:esp32:m5stack-core2",
-    "port": "/dev/tty.usbserial-028C2812",
+    "sketch": "p2gps/p2gps.ino",
+    "configuration": "FlashMode=qio,FlashFreq=80,PartitionScheme=default,UploadSpeed=115200,DebugLevel=none,EraseFlash=none",
+    "board": "esp32:esp32:m5stack-core-esp32",
+    "port": "/dev/tty.usbserial-01CDDA39",
     "programmer": "esptool",
     "output": "output"
 }
