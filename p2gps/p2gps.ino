@@ -30,17 +30,17 @@ boolean UPDATE_FLAG;                                          /* Display update 
 boolean LOC_UPDATE_FLAG;                                      /* Location update flag: TRUE = Update, FALSE = No update */
 boolean ALT_UPDATE_FLAG;                                      /* Altitude update flag: TRUE = Update, FALSE = No update */
 boolean SPEED_UPDATE_FLAG;                                    /* Speed update flag: TRUE = Update, FALSE = No update */
-boolean SAT_UPDATE_FLAG;                                      /* Nr. of sattelites update flag: TRUE = Update, FALSE = No update */
+boolean SAT_UPDATE_FLAG;                                      /* Nr. of satellites update flag: TRUE = Update, FALSE = No update */
 boolean HDOP_UPDATE_FLAG;                                     /* HDOP update flag: TRUE = Update, FALSE = No update */
 byte LOOP_COUNTER;                                            /* Generic loop counter for delay */
 byte DELAY_CHECK = 0;                                         /* Delay to check if any data received */
 byte LCD_BRIGHTNESS = 250;                                    /* LCD brightness value (0-250) */
-byte MENU_LANGUAGE = 0;                                       /* Menu Language 0 = German, 1 = English */
+byte MENU_LANGUAGE = 1;                                       /* Menu Language 0 = German, 1 = English */
 byte GPS_FORMAT = 0;                                          /* GPS format 0 = Decimal degree, 1= Degree, Minutes, Seconds */   
 byte GPS_STATUS;                                              /* GPS status: 0 = No GPS receiver detected, 1 = No valid GPS fix, 2 = Valid GPS data */   
 unsigned int NO_OF_SAT;                                       /* Number of satellites */ 
-unsigned int CHARS_PROCESSED = 0;                             /* Number of procesed chars */                       
-unsigned int OLD_CHARS_PROCESSED = 1;                         /* Number of procesed chars */ 
+unsigned int CHARS_PROCESSED = 0;                             /* Number of processed chars */                       
+unsigned int OLD_CHARS_PROCESSED = 1;                         /* Number of processed chars */ 
 unsigned int OLD_NO_OF_SAT;                                   /* Old number of satellites */ 
 unsigned int OLD_HDOP;                                        /* Old HDOP value */
 int OLD_SEC = 0;                                              /* Old second */  
@@ -134,7 +134,7 @@ void loop()
       NO_OF_SAT = 0;                                          /* Set number of satellites to 0 */
     }
     /* Decide on number of satellites received */
-    if (NO_OF_SAT < MINUMUM_SAT)                              /* Too less satelites received ? */
+    if (NO_OF_SAT < MINUMUM_SAT)                              /* Too less satellites received ? */
     {
       if (UPDATE_FLAG == true)                                /* Update flag true ? */
       {
@@ -150,7 +150,7 @@ void loop()
       LOC_UPDATE_FLAG = true;                                 /* Set location update flag true */ 
       ALT_UPDATE_FLAG = true;                                 /* Set altitude update flag true */
       SPEED_UPDATE_FLAG = true;                               /* Set speed update flag true */
-      SAT_UPDATE_FLAG = true;                                 /* Set number of sattelites update flag true */
+      SAT_UPDATE_FLAG = true;                                 /* Set number of satellites update flag true */
       HDOP_UPDATE_FLAG = true;                                /* Set HDOP update flag true */
     } 
   }
@@ -159,15 +159,15 @@ void loop()
   if (GPS_STATUS == 2)                                        /* GPS status is 2 ? */ 
   {
     /* Check number of satellites */
-    if (gps.satellites.isValid() == true)                     /* Valid GPS number of sattllites received ? */
+    if (gps.satellites.isValid() == true)                     /* Valid GPS number of satellites received ? */
     {
       NO_OF_SAT = gps.satellites.value();                     /* Save number of satellites */  
     }
-    else                                                      /* Not valid GPS number of sattelites received ? */
+    else                                                      /* Not valid GPS number of satellites received ? */
     {
       NO_OF_SAT = 0;                                          /* Set number of satellites to 0 */
     }
-    if (NO_OF_SAT < MINUMUM_SAT)                              /* Too less satelites received ? */
+    if (NO_OF_SAT < MINUMUM_SAT)                              /* Too less satellites received ? */
     {   
       GPS_STATUS = 1;                                         /* Set GPS status 1 */
       UPDATE_FLAG = true;                                     /* Set update flag true */
@@ -184,7 +184,7 @@ void loop()
       SUB_DISPLAY_LOCATION();                                 /* Call sub routine to display location */
       SUB_DISPLAY_ALTITUDE();                                 /* Call sub routine to display altitude */
       SUB_DISPLAY_SPEED();                                    /* Call sub routine to display speed */
-      SUB_DISPLAY_SAT();                                      /* Call sub routine to display number of sattelites */
+      SUB_DISPLAY_SAT();                                      /* Call sub routine to display number of satellites */
       SUB_DISPLAY_HDOP();                                     /* Call sub routine to display HDOP value */
     }
   } 
@@ -208,7 +208,7 @@ void loop()
         LOC_UPDATE_FLAG = true;                               /* Set location update flag true */ 
         ALT_UPDATE_FLAG = true;                               /* Set altitude update flag true */
         SPEED_UPDATE_FLAG = true;                             /* Set speed update flag true */
-        SAT_UPDATE_FLAG = true;                               /* Set number of sattelites update flag true */
+        SAT_UPDATE_FLAG = true;                               /* Set number of satellites update flag true */
         HDOP_UPDATE_FLAG = true;                              /* Set HDOP update flag true */
       }
       else                                                    /* English selected ? */
@@ -218,7 +218,7 @@ void loop()
         LOC_UPDATE_FLAG = true;                               /* Set location update flag true */ 
         ALT_UPDATE_FLAG = true;                               /* Set altitude update flag true */
         SPEED_UPDATE_FLAG = true;                             /* Set speed update flag true */
-        SAT_UPDATE_FLAG = true;                               /* Set number of sattelites update flag true */
+        SAT_UPDATE_FLAG = true;                               /* Set number of satellites update flag true */
         HDOP_UPDATE_FLAG = true;                              /* Set HDOP update flag true */
       }
     }
@@ -358,18 +358,18 @@ void SUB_DISPLAY_DATE_TIME ()
     M5.Lcd.fillRect(0, 215, 320, 25, 0x439);                  /* Clear old time and date */
     M5.Lcd.setTextSize(2);                                    /* Set text size to 2 */
     M5.Lcd.setCursor(10, 219);                                /* Position cursor to display time */ 
-    /* Convert into dispaly string */
+    /* Convert into display string */
     sprintf(CONVERTED, "%02d:%02d:%02d ", ACT_HOUR, ACT_MIN, ACT_SEC);
     M5.Lcd.print(CONVERTED);                                  /* Display converted time string */
     M5.Lcd.setCursor(190, 219);                               /* Position cursor to display date */
     if (MENU_LANGUAGE == 0)                                   /* German language chosen ? */
     {    
-      /* Convert into dispaly string */
+      /* Convert into display string */
       sprintf(CONVERTED, "%02d.%02d.%02d ", ACT_DAY, ACT_MONTH, ACT_YEAR);
     }
     else                                                      /*Englishn language chosen ? */         
     {
-      /* Convert into dispaly string */
+      /* Convert into display string */
       sprintf(CONVERTED, "%02d/%02d/%02d ", ACT_YEAR, ACT_MONTH, ACT_DAY);
     }
     M5.Lcd.print(CONVERTED);                                  /* Display converted date string */
@@ -382,13 +382,13 @@ void SUB_DISPLAY_DATE_TIME ()
     {
       M5.Lcd.fillRect(0, 215, 320, 25, 0x439);                /* Clear old time and date */
       M5.Lcd.setTextSize(2);                                  /* Set text size to 2 */
-      M5.Lcd.print(F("--:--:--"));                            /* Dispaly time placeholder */
+      M5.Lcd.print(F("--:--:--"));                            /* display time placeholder */
       M5.Lcd.setCursor(190, 219);                             /* Position cursor to display date */
       if (MENU_LANGUAGE == 0)                                 /* German language chosen ? */
       {
         M5.Lcd.print(F("--.--.----"));                        /* Display date placeholder */
       }  
-      else                                                    /*Englishn language chosen ? */         
+      else                                                    /*English language chosen ? */         
       {
         M5.Lcd.print(F("----/--/--"));                        /* Display date placeholder */
       }
@@ -416,16 +416,16 @@ void SUB_DISPLAY_LOCATION ()
   {
     LOC_FAIL_UPDATE = true;                                   /* Update needed */
     M5.Lcd.setTextSize(3);                                    /* Set text size to 3 */
-    ACT_LOC_LAT = gps.location.lat();                         /* Get lattitude value */
+    ACT_LOC_LAT = gps.location.lat();                         /* Get latitude value */
     ACT_LOC_LNG = gps.location.lng();                         /* Get longitude value */
 
-    /* Display lattitude value */
+    /* Display latitude value */
     ROUNDED_VAL = SUB_ROUND_FLOAT_VALUE (ACT_LOC_LAT, 5);     /* Call subroutine to round float to 5 digits */
     /* Value has changed for updating display or location update flag true? */
     if ((OLD_LOC_LAT != ROUNDED_VAL) || (LOC_UPDATE_FLAG == true))                          
     {
       OLD_LOC_LAT = ROUNDED_VAL;                              /* Save value */
-      M5.Lcd.fillRect(114, 40, 169, 44, 0x1E9F);              /* Clear old degree of lattitude value */
+      M5.Lcd.fillRect(114, 40, 169, 44, 0x1E9F);              /* Clear old degree of latitude value */
       M5.Lcd.setCursor(115, 50);                              /* Position cursor */
       if (GPS_FORMAT == 0)                                    /* Format 0 selected */
       {     
@@ -445,11 +445,11 @@ void SUB_DISPLAY_LOCATION ()
         /*Extract Second value */
         ACT_LOC_LAT= ACT_LOC_LAT - CONVERT_DATA;
         ACT_LOC_LAT = ACT_LOC_LAT * 60;  
-        M5.Lcd.print (ACT_LOC_LAT, 0);                        /* Dispaly second value */
+        M5.Lcd.print (ACT_LOC_LAT, 0);                        /* display second value */
       }
     }
     
-    /* Display lngitude value */
+    /* Display longitude value */
     ROUNDED_VAL = SUB_ROUND_FLOAT_VALUE (ACT_LOC_LNG, 5);     /* Call subroutine to round float to 5 digits */
     /* Value has changed for updating display or location update flag true? */
     if ((OLD_LOC_LNG != ROUNDED_VAL) || (LOC_UPDATE_FLAG == true))
@@ -475,7 +475,7 @@ void SUB_DISPLAY_LOCATION ()
         /*Extract Second value */
         ACT_LOC_LNG= ACT_LOC_LNG - CONVERT_DATA;
         ACT_LOC_LNG = ACT_LOC_LNG * 60;  
-        M5.Lcd.print (ACT_LOC_LNG, 0);                        /* Dispaly second value */
+        M5.Lcd.print (ACT_LOC_LNG, 0);                        /* display second value */
       }
     }
     LOC_UPDATE_FLAG = false;                                  /* Set location update flag false */
@@ -485,7 +485,7 @@ void SUB_DISPLAY_LOCATION ()
     if (LOC_FAIL_UPDATE == true)                              /* Update needed ? */
     { 
       M5.Lcd.setTextSize(3);
-      M5.Lcd.fillRect(114, 40, 169, 44, 0x1E9F);              /* Clear old degree of lattitude value */
+      M5.Lcd.fillRect(114, 40, 169, 44, 0x1E9F);              /* Clear old degree of latitude value */
       M5.Lcd.fillRect(114, 94, 169, 44, 0x1E9F);              /* Clear old degree of longitude value */
       if (GPS_FORMAT == 0)                                    /* Format 0 selected */
       {
@@ -514,7 +514,7 @@ void SUB_DISPLAY_LOCATION ()
 void SUB_DISPLAY_ALTITUDE ()
 {
   boolean ALT_FAIL_UPDATE;                                    /* True = Needs update, False = Needs no update */
-  float ACT_ALTITUDE;                                         /* Actual laltitude value */ 
+  float ACT_ALTITUDE;                                         /* Actual latitude value */ 
   int INTEGER_VAL;                                            /* Integer value */
   int STRING_LENGTH;                                          /* Length of string */
 
@@ -546,7 +546,7 @@ void SUB_DISPLAY_ALTITUDE ()
       M5.Lcd.print(CONVERTED);                                /* Display value */
       M5.Lcd.print("m");
     } 
-    ALT_UPDATE_FLAG = false;                                  /* Set altitrude update flag false */     
+    ALT_UPDATE_FLAG = false;                                  /* Set altitude update flag false */     
   }
   else                                                        /* Not valid GPS altitude received ? */
   {
@@ -579,7 +579,7 @@ void SUB_DISPLAY_SPEED ()
   {
     SPEED_FAIL_UPDATE = true;                                 /* Update needed */
     M5.Lcd.setTextSize(3);                                    /* Set text size to 3 */
-    ACT_SPEED = gps.speed.kmph();                             /* Get speed value */
+    ACT_SPEED = gps.speed.knots();                             /* Get speed value */
 
     /* Display speed value */
     INTEGER_VAL = (int)(ACT_SPEED);                           /* Extract integer value of speed variable */
@@ -617,8 +617,8 @@ void SUB_DISPLAY_SPEED ()
 
 
 /****************************************************************************************/
-/* SUBROUTINE Display Sattelites                                                         */
-/* This subroutine displays the number of sattelites                                    */
+/* SUBROUTINE Display satellites                                                         */
+/* This subroutine displays the number of satellites                                    */
 /****************************************************************************************/
 void SUB_DISPLAY_SAT ()
 {
@@ -626,7 +626,7 @@ void SUB_DISPLAY_SAT ()
 
   SAT_FAIL_UPDATE = false;                                    /* No update needed */
 
-  if (gps.satellites.isValid() == true)                       /* Valid GPS number of sattllites received ? */
+  if (gps.satellites.isValid() == true)                       /* Valid GPS number of satellites received ? */
   {
     SAT_FAIL_UPDATE = true;                                   /* Update needed */
     M5.Lcd.setTextSize(2);                                    /* Set text size to 2 */
@@ -634,9 +634,9 @@ void SUB_DISPLAY_SAT ()
     if ((OLD_NO_OF_SAT != NO_OF_SAT) || (SAT_UPDATE_FLAG == true))                          
     {
       OLD_NO_OF_SAT = NO_OF_SAT;                              /* Save value */
-      M5.Lcd.fillRect(275, 145, 45, 35, 0x1E9F);              /* Clear satelite field */
+      M5.Lcd.fillRect(275, 145, 45, 35, 0x1E9F);              /* Clear satellite field */
       M5.Lcd.setCursor(280, 155);                             /* Display header info */
-      M5.Lcd.print(NO_OF_SAT);                                /* Display number of sattelites */      
+      M5.Lcd.print(NO_OF_SAT);                                /* Display number of satellites */      
     }
     SAT_UPDATE_FLAG = false;                                  /* Set speed update flag false */ 
   }
@@ -644,11 +644,11 @@ void SUB_DISPLAY_SAT ()
   {
     if (SAT_FAIL_UPDATE == true)                              /* Update needed ? */
     { 
-      M5.Lcd.fillRect(275, 145, 45, 35, 0x1E9F);              /* Clear satelite field */
+      M5.Lcd.fillRect(275, 145, 45, 35, 0x1E9F);              /* Clear satellite field */
       M5.Lcd.setCursor(280, 155);                             /* Display header info */
-      M5.Lcd.print("-");                                      /* Display sattelite placeholder */
+      M5.Lcd.print("-");                                      /* Display satellite placeholder */
     }
-    SAT_FAIL_UPDATE = false;                                  /* Set sattelite update false */
+    SAT_FAIL_UPDATE = false;                                  /* Set satellite update false */
   }
 }
 
@@ -675,7 +675,7 @@ void SUB_DISPLAY_HDOP ()
     if ((OLD_HDOP != INTEGER_VAL) || (HDOP_UPDATE_FLAG == true))                          
     {
       OLD_HDOP = INTEGER_VAL;                                 /* Save value */
-      M5.Lcd.fillRect(275, 180, 45, 28, 0x1E9F);              /* Clear satelite field */
+      M5.Lcd.fillRect(275, 180, 45, 28, 0x1E9F);              /* Clear satellite field */
       M5.Lcd.setCursor(280, 185);                             /* Display header info */
       M5.Lcd.print(INTEGER_VAL);                              /* Display HDOP value */      
     }
@@ -685,11 +685,11 @@ void SUB_DISPLAY_HDOP ()
   {
     if (HDOP_FAIL_UPDATE == true)                             /* Update needed ? */
     { 
-      M5.Lcd.fillRect(275, 180, 45, 28, 0x1E9F);              /* Clear satelite field */
+      M5.Lcd.fillRect(275, 180, 45, 28, 0x1E9F);              /* Clear satellite field */
       M5.Lcd.setCursor(280, 185);                             /* Display header info */
-      M5.Lcd.print("---");                                    /* Display sattelite placeholder */
+      M5.Lcd.print("---");                                    /* Display satellite placeholder */
     }
-    HDOP_FAIL_UPDATE = false;                                 /* Set sattelite update false */
+    HDOP_FAIL_UPDATE = false;                                 /* Set satellite update false */
   }
 }  
 
@@ -718,7 +718,7 @@ void SUB_DISPLAY_MAIN (void)
 
   if (MENU_LANGUAGE == 0)                                     /* German language chosen ? */
   {
-    M5.Lcd.setCursor(5, 40);                                  /* Display degree of lattitude */
+    M5.Lcd.setCursor(5, 40);                                  /* Display degree of latitude */
     M5.Lcd.print("Breiten-");
     M5.Lcd.setCursor(5, 65);  
     M5.Lcd.print("grad");
@@ -733,7 +733,7 @@ void SUB_DISPLAY_MAIN (void)
   }
   else                                                        /*Englishn language chosen ? */         
   {
-    M5.Lcd.setCursor(5, 40);                                  /* Display degree of lattitude */
+    M5.Lcd.setCursor(5, 40);                                  /* Display degree of latitude */
     M5.Lcd.print("Degree");
     M5.Lcd.setCursor(5, 65);  
     M5.Lcd.print("of Lat.");
@@ -747,7 +747,7 @@ void SUB_DISPLAY_MAIN (void)
     M5.Lcd.print("Speed");
   }
   
-  M5.Lcd.setCursor(215, 155);                                 /* Display number of sattelites */
+  M5.Lcd.setCursor(215, 155);                                 /* Display number of satellites */
   M5.Lcd.println(" Sat.");
   M5.Lcd.setCursor(215, 185);                                 /* Display HDOP info */
   M5.Lcd.print(" HDOP");
